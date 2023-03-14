@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>貪食蛇遊戲</title>
+    <meta name="author" content="Brock" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="icon" href="./icon_snake.png" />
+  </head>
+  <body>
+    <canvas
+      id="mycanvas"
+      width="480"
+      height="480"
+      style="background-color: black"
+    ></canvas>
+    <div class="top">
+      <div class="score">
+        <p id="myscore"></p>
+        <p id="mybestscore"></p>
+      </div>
+      <button class="change"><a href="./hard.html">切換為困難</a></button>
+    </div>
+    <button type="button" onClick="location.reload()" id="start">
+      開始新遊戲
+    </button>
+    <script src="./app.js"></script>
+  </body>
+</html>
