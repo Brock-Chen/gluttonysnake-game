@@ -5,6 +5,7 @@ const unit = 20;
 const row = canvas.height / unit; // 480/20 = 24
 const column = canvas.width / unit; // 480/20 = 24
 
+// 設定蛇的初始位置
 let snake = [];
 function createSnake() {
   snake[0] = {
@@ -29,6 +30,7 @@ function createSnake() {
 }
 createSnake();
 
+// 設定果實位置
 class Fruit {
   constructor() {
     this.x = Math.floor(Math.random() * column) * unit;
@@ -40,6 +42,7 @@ class Fruit {
     ctx.fillRect(this.x, this.y, unit, unit);
   }
 
+  // 檢查新的果實有無與蛇的位置重複
   pickAFrurit() {
     let over = false;
     let newx;
@@ -66,6 +69,7 @@ class Fruit {
 
 let myFruit = new Fruit();
 
+// 設定鍵盤操控蛇
 window.addEventListener("keydown", changeDirection);
 function changeDirection(e) {
   if ((e.key == "ArrowRight" || e.key == "d") && d != "left") {
@@ -81,12 +85,22 @@ function changeDirection(e) {
 }
 
 let d = "right";
+
+// 分數顯示
 let score = 0;
-let highScore;
+let highScore, highScore2;
+// 獲取當前為簡單還是困難頁面
+let changeHard = document.querySelector(".changeHard");
 bestscore();
 document.getElementById("myscore").innerHTML = "目前遊戲分數 :  " + score;
-document.getElementById("mybestscore").innerHTML =
-  "最高遊戲分數 :  " + highScore;
+if (changeHard) {
+  document.getElementById("mybestscore").innerHTML =
+    "最高遊戲分數 :  " + highScore;
+} else {
+  document.getElementById("mybestscore").innerHTML =
+    "最高遊戲分數 :  " + highScore2;
+}
+// 設定死亡邏輯
 function draw() {
   for (let i = 1; i < snake.length; i++) {
     if (snake[i].x == snake[0].x && snake[i].y == snake[0].y) {
@@ -101,6 +115,7 @@ function draw() {
 
   myFruit.drawAFruit();
 
+  // 設定穿牆功能
   for (let i = 0; i < snake.length; i++) {
     if (i == 0) {
       ctx.fillStyle = "lightgreen";
@@ -129,6 +144,7 @@ function draw() {
     ctx.strokeRect(snake[i].x, snake[i].y, unit, unit);
   }
 
+  // 設定蛇移動
   let snakeX = snake[0].x;
   let snakeY = snake[0].y;
   if (d == "right") {
@@ -146,13 +162,18 @@ function draw() {
     y: snakeY,
   };
 
+  // 吃到果實的事件設定
   if (snake[0].x == myFruit.x && snake[0].y == myFruit.y) {
     myFruit.pickAFrurit();
     score++;
     setbestscore(score);
     document.getElementById("myscore").innerHTML = "目前遊戲分數 :  " + score;
-    document.getElementById("mybestscore").innerHTML =
-      "最高遊戲分數 :  " + highScore;
+    if (changeHard) {
+      document.getElementById("mybestscore").innerHTML =
+        "最高遊戲分數 :  " + highScore;
+    } else
+      document.getElementById("mybestscore").innerHTML =
+        "最高遊戲分數 :  " + highScore2;
   } else {
     snake.pop();
   }
@@ -160,19 +181,38 @@ function draw() {
   window.addEventListener("keydown", changeDirection);
 }
 
-let myGame = setInterval(draw, 100);
+let myGame;
+if (changeHard) {
+  myGame = setInterval(draw, 100);
+} else myGame = setInterval(draw, 60);
 
+// 目前分數與歷史最高分數設定
 function bestscore() {
-  if (localStorage.getItem("highScore") == null) {
-    highScore = 0;
+  if (changeHard) {
+    if (localStorage.getItem("highScore") == null) {
+      highScore = 0;
+    } else {
+      highScore = Number(localStorage.getItem("highScore"));
+    }
   } else {
-    highScore = Number(localStorage.getItem("highScore"));
+    if (localStorage.getItem("highScore2") == null) {
+      highScore2 = 0;
+    } else {
+      highScore2 = Number(localStorage.getItem("highScore2"));
+    }
   }
 }
 
 function setbestscore(score) {
-  if (score > highScore) {
-    localStorage.setItem("highScore", score);
-    highScore = score;
+  if (changeHard) {
+    if (score > highScore) {
+      localStorage.setItem("highScore", score);
+      highScore = score;
+    }
+  } else {
+    if (score > highScore2) {
+      localStorage.setItem("highScore2", score);
+      highScore2 = score;
+    }
   }
 }

@@ -21,7 +21,8 @@ body {
   padding-left: 11.5rem;
 }
 
-.change {
+.changeHard,
+.changeEasy {
   margin-left: 4rem;
   height: 30px;
   width: 100px;
