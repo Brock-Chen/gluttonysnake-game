@@ -27,4 +27,5 @@
 如果您發現了任何問題或有改進的建議，歡迎提交 issue 或 pull request，謝謝！
 
 ## License
-本專案使用 MIT 授權，詳情請參考 LICENSE 文件。
+本專案使用 MIT 授權，詳情請參考 [License](https://github.com/FlowiseAI/Flowise/blob/main/LICENSE.md) 文件。<br/>
+Copyright (c) 2023 Brock Chen
